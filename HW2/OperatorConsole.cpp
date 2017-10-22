@@ -27,7 +27,7 @@ void OperatorConsole::threadFunc()
 		pressure = pressCont.getPressure();
 		temperature = tempCont.getTemperature();
 
-		std::cout << "Pressure:" << (double)pressure << " Temperature:" << temperature << std::endl;
+		std::cout << "Pressure:" <<pressure << " Temperature:" << temperature << std::endl;
 
 		// work every x ms
 		std::this_thread::sleep_for(std::chrono::milliseconds(this->workInterval));

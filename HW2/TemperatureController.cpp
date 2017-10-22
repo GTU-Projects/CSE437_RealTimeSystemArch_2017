@@ -11,7 +11,7 @@
 #include "TemperatureController.hpp"
 #include "ISimulator.hpp"
 
-
+using HRC = std::chrono::high_resolution_clock;
 
 TemperatureController::TemperatureController(ISimulator& simulator,int interval):
 	simulator(simulator),workInterval(interval)
@@ -35,10 +35,11 @@ double TemperatureController::getTemperature() const
 
 void TemperatureController::threadFunc() {
 	double u;
-
-	this->simulator.triggerADCTemperature();
+	HRC::time_point t0, t1;
+	
 	while (1) {
-
+		t0 = HRC::now();
+		this->simulator.triggerADCTemperature();
 		// read ADC-pressure value and control it
 		this->temperature = this->simulator.readADCTemperature();
 		// check temperature, set next state
@@ -49,7 +50,10 @@ void TemperatureController::threadFunc() {
 			this->simulator.switchHeater(false);
 		}
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(workInterval));
+		t1 = HRC::now();
+
+		auto passedTime = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+		std::this_thread::sleep_for(std::chrono::milliseconds(workInterval-passedTime));
 	}
 }
 
