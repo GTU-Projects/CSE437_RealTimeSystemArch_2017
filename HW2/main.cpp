@@ -1,4 +1,7 @@
 #include <iostream>
+#include "PressureController.hpp"
+#include "TemperatureController.hpp"
+#include "OperatorConsole.hpp"
 #include "ISimulator.hpp"
 #include "HMSimulator.hpp"
 

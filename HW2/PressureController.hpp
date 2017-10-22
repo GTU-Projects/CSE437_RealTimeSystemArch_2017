@@ -18,7 +18,6 @@ public:
 	PressureController(ISimulator &simulator,int interval);
 	~PressureController();
 
-
 	double getPressure() const;
 	
 private:
@@ -30,6 +29,8 @@ private:
 	const  double B = 1.0;
 
 	std::thread *pressureTask;
+
+	// access sensor value via simulator / aggregation
 	ISimulator &simulator;
 
 	void pressTaskFunc();

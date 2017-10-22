@@ -24,5 +24,9 @@ public:
 	double readADCTemperature();
 	void writeDACPump(const double value);
 	void switchHeater(bool isOn);
+
+private:
+	double testTemperature; // temperature value to test simulator. Value will be increased and decreased
+	double testPressure; // pressure value will be increased and decreased for testing
 };
 

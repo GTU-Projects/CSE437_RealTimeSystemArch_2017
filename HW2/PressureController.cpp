@@ -6,8 +6,11 @@
 *			  Calculates new pump pressure value according to old pressure value and writes to pump.
 */
 #include <iostream>
+#include <chrono>
 #include "PressureController.hpp"
 #include "ISimulator.hpp"
+
+using HRC = std::chrono::high_resolution_clock;
 
 
 
@@ -36,21 +39,30 @@ double PressureController::getPressure() const
 void PressureController::pressTaskFunc() {
 	double u;
 
-	this->simulator.triggerADCPressure();
+	HRC::time_point t0,t1;
 	while (1) {
+
+		t0 = HRC::now(); // start of do some work area
+
+		// trigger ADC to take pressure value
+		this->simulator.triggerADCPressure();
 
 		// read ADC-pressure value and control it
 		this->pressure = this->simulator.readADCPressure();
-		if (this->pressure < 0.9) {
+		
+
+		if (this->pressure < 0.9000) {
 			u = this->A - this->B*this->pressure;
 		}
 		else {
 			u = 0;
 		}
-
 		simulator.writeDACPump(u);
 
+		t1 = HRC::now(); // end of do some work area
+
 		//std::cout << "Pressure Task writed to Pump." << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(workInterval));
+		auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+		std::this_thread::sleep_for(std::chrono::milliseconds(workInterval-ms));
 	}
 }
