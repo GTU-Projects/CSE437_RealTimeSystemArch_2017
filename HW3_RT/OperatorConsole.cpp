@@ -42,7 +42,7 @@ void OperatorConsole::consoleThreadFunc(void) {
 	bool printPressWarning=false;
 	bool printTempWarning = false;
 
-	HRC::time_point t0,t1;
+	HRC::time_point t0,t1,t3;
 	std::cout << std::fixed << std::setprecision(2);
 
 	mPressLastUpdTime = HRC::now();
@@ -57,14 +57,15 @@ void OperatorConsole::consoleThreadFunc(void) {
 		// control every 10ms if sensors pass deadline or not
 		// 50*10 = 500ms 
 		for (int i = 0; i < 49; ++i) {
-			pressUpdateDiff = std::chrono::duration_cast<std::chrono::milliseconds>(t0 - mPressLastUpdTime).count();
+			t3 = HRC::now();
+			pressUpdateDiff = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - mPressLastUpdTime).count();
 			pressUpdateDiff -= PRESSURE_C_WORK_INT;
 			if (pressUpdateDiff > 0 && printPressWarning) {
 				std::cout << "WARNING! PressureController deadline miss by " << pressUpdateDiff << " milliseconds." << std::endl;
 				printPressWarning = false;
 			}
 
-			tempUpdateDiff = std::chrono::duration_cast<std::chrono::milliseconds>(t0 - mTempLastUpdTime).count();
+			tempUpdateDiff = std::chrono::duration_cast<std::chrono::milliseconds>(t3 - mTempLastUpdTime).count();
 			tempUpdateDiff -= TEMPERATURE_C_WORK_INT;
 			if (tempUpdateDiff > 0 && printTempWarning) {
 				std::cout << "WARNING! TemperatureController deadline miss by " << pressUpdateDiff << " milliseconds." << std::endl;
