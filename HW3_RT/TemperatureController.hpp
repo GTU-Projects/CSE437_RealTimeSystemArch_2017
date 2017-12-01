@@ -1,7 +1,7 @@
 /*
  * File		: TemperatureController.hpp
  * Author	: hasan.men
- * Time		: 20.10.17
+ * Time		: 01.12.2017
  * Brief	: Temperature Controller reads temperature from ADC Temperature sensor every x ms.
  *			  Checks temperature with C,D values and sets heater state.
  */
@@ -28,5 +28,7 @@ private:
 	OperatorConsole &mRefOpConsole;
 
 	std::thread *temperatureTask;
+
 	void threadFunc();
+	void setPriority(int policy, int prio);
 };

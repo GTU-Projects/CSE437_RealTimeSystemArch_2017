@@ -1,7 +1,7 @@
 /*
 * File		: PressureController.cpp
 * Author	: hasan.men
-* Time		: 20.10.17
+* Time		: 01.12.2017
 * Brief		: Pressure Controller reads pressure from ADC Pressure sensor every x ms.
 *			  Calculates new pump pressure value according to old pressure value and writes to pump.
 */
@@ -16,6 +16,22 @@ PressureController::PressureController(ISimulator& simulator,OperatorConsole &op
 {
 	// create pressure controller/calculator task
 	pressureTask = new std::thread(&PressureController::pressTaskFunc,this);
+	this->setPriority(SCHED_RR,10);
+	this->pressure=0;
+}
+
+void PressureController::setPriority(int policy, int prio){
+
+	sched_param schedParams;
+
+	schedParams.sched_priority=prio;
+
+	// get pthread_t object
+	auto handlePthread = this->pressureTask->native_handle();
+
+	if(pthread_setschedparam(handlePthread,policy,&schedParams)){
+		std::cerr<<"Pressure Controller Thread scheduling error"<<std::endl;
+	}
 }
 
 

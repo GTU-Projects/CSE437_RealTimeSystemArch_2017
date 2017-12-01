@@ -17,6 +17,22 @@ TemperatureController::TemperatureController(ISimulator& mRefSimulator, Operator
 {
 	// create temperature controller task
 	this->temperatureTask = new std::thread(&TemperatureController::threadFunc, this);
+	this->setPriority(SCHED_RR,10); // SCHED raund robin 10 priority
+
+}
+
+void TemperatureController::setPriority(int policy, int prio){
+
+	sched_param schedParams;
+
+	schedParams.sched_priority=prio;
+
+	// get pthread_t object
+	auto handlePthread = this->temperatureTask->native_handle();
+
+	if(pthread_setschedparam(handlePthread,policy,&schedParams)){
+		std::cerr<<"Temperature Thread scheduling error"<<std::endl;
+	}
 }
 
 

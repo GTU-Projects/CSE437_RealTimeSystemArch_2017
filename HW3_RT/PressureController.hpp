@@ -35,6 +35,7 @@ private:
 	ISimulator &mRefSimulator;
 	OperatorConsole &mRefOpConsole;
 
+	void setPriority(int policy, int prio);
 	void pressTaskFunc();
 
 };
