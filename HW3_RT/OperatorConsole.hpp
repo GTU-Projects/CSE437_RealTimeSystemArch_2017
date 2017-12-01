@@ -5,6 +5,9 @@
  * Brief		: Operator console outputs pressure and temperature to console every x ms.
  */
 #pragma once
+#include "ISimulator.hpp"
+#include "CONSTANTS.h"
+
 #include <atomic>
 #include <thread>
 #include <chrono>
@@ -12,7 +15,7 @@
 class OperatorConsole
 {
 public:
-	OperatorConsole(int workPeriodInMS);
+	OperatorConsole();
 	~OperatorConsole();
 
 	void savePressure(double pressure);
@@ -21,13 +24,11 @@ private:
 
 	std::thread *operatorTask;
 
-	int workInterval;
-
 	std::atomic<double> mLastPressure;
 	std::atomic<double> mLastTemperature;
 
-	//HRC::time_point mPressLastUpdTime;
-	//HRC::time_point mTempLastUpdTime;
+	HRC::time_point mPressLastUpdTime;
+	HRC::time_point mTempLastUpdTime;
 
 	void consoleThreadFunc();
 };

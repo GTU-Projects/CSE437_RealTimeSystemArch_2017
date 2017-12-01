@@ -30,6 +30,9 @@
     <ClInclude Include="TemperatureController.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CONSTANTS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HMSimulator.cpp">

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CONSTANTS.h" />
     <ClInclude Include="HMSimulator.hpp" />
     <ClInclude Include="ISimulator.hpp" />
     <ClInclude Include="OperatorConsole.hpp" />

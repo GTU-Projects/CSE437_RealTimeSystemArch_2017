@@ -7,17 +7,17 @@
  */
 #pragma once
 #include <thread>
+#include "CONSTANTS.h"
 #include "OperatorConsole.hpp"
 #include "ISimulator.hpp"
 
 class TemperatureController
 {
 public:
-	TemperatureController(ISimulator& mRefSimulator,OperatorConsole &opConsole, int interval);
+	TemperatureController(ISimulator& mRefSimulator,OperatorConsole &opConsole);
 	~TemperatureController();
 	double getTemperature() const;
 private:
-	int workInterval;
 	double temperature;
 
 	const double C = 4.0; // temperature min bound

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <thread>
+#include "CONSTANTS.h"
 #include "ISimulator.hpp"
 #include "OperatorConsole.hpp"
 
@@ -16,13 +17,12 @@
 class PressureController
 {
 public:
-	PressureController(ISimulator &mRefSimulator,OperatorConsole &opConsole,int interval);
+	PressureController(ISimulator &mRefSimulator,OperatorConsole &opConsole);
 	~PressureController();
 
 	double getPressure() const;
 	
 private:
-	int workInterval; // 10Hz = 100ms
 	double pressure; // calculated pressure value
 
 	// Pressure calc. ratio values

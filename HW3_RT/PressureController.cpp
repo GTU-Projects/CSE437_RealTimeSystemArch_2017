@@ -11,8 +11,8 @@
 #include "ISimulator.hpp"
 
 
-PressureController::PressureController(ISimulator& simulator,OperatorConsole &opConsole,int interval) :
-	mRefSimulator(simulator), mRefOpConsole(opConsole) ,workInterval(interval)
+PressureController::PressureController(ISimulator& simulator,OperatorConsole &opConsole) :
+	mRefSimulator(simulator), mRefOpConsole(opConsole)
 {
 	// create pressure controller/calculator task
 	pressureTask = new std::thread(&PressureController::pressTaskFunc,this);
@@ -61,7 +61,7 @@ void PressureController::pressTaskFunc() {
 		t1 = HRC::now(); // end of do some work area
 
 		//std::cout << "Pressure Task writed to Pump." << std::endl;
-		auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
-		std::this_thread::sleep_for(std::chrono::milliseconds(workInterval-ms));
+		auto passedTime = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+		std::this_thread::sleep_for(std::chrono::milliseconds(PRESSURE_C_WORK_INT - passedTime));
 	}
 }

@@ -12,11 +12,9 @@
 
 using HRC = std::chrono::high_resolution_clock;
 
-TemperatureController::TemperatureController(ISimulator& mRefSimulator, OperatorConsole & opConsole, int interval):
+TemperatureController::TemperatureController(ISimulator& mRefSimulator, OperatorConsole & opConsole):
 	mRefSimulator(mRefSimulator), mRefOpConsole(opConsole)
 {
-	this->workInterval = interval;
-
 	// create temperature controller task
 	this->temperatureTask = new std::thread(&TemperatureController::threadFunc, this);
 }
@@ -59,8 +57,8 @@ void TemperatureController::threadFunc() {
 
 		t1 = HRC::now();
 
-		auto passedTime = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
-		std::this_thread::sleep_for(std::chrono::milliseconds(workInterval-passedTime));
+		int passedTime = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+		std::this_thread::sleep_for(std::chrono::milliseconds(TEMPERATURE_C_WORK_INT -passedTime));
 	}
 }
 
