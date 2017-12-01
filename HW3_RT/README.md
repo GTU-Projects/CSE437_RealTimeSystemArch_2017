@@ -2,13 +2,16 @@
 
 HASAN MEN - 131044009
 
-## HOW TO USE CLASSSES- Requirements:
+## [How to install Real Time Kernel patch on Linux(Ubuntu 16.04)](https://hmenn.github.io/pages/UbuntuRT_patch.html)
+
+## HOW TO USE CLASSES- Requirements:
 1. Create your Simulator which implements ISimulator
 2. Set pressure and temperature work interval from CONSTANTS.h then construct PressureController and TemperatureController
 3. Construct OperatorConsole to see results on console. Pressure and Temperature will send save/update request end of their work interval
 4. When you construct OperatorConsole, it will print values to console.
 5. Please check main.cpp to see calling orders
 
+  ![Classes](Capture.JPG)
 
 ### PressureController
 1. You can set A,B values which exist in PressureController.hpp to set pressure sensitivity.
